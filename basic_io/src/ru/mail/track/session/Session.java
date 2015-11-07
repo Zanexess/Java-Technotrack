@@ -6,9 +6,17 @@ public class Session {
     private User sessionUser;
 
     public Session() {
+
     }
 
-    public User getSessionUser() throws NullPointerException { return sessionUser; }
+    public boolean isUserAuthentificated() {
+        if (sessionUser == null)
+            return false;
+        else
+            return true;
+    }
+
+    public User getSessionUser() { return sessionUser; }
 
     public void setSessionUser(User sessionUser) {
         this.sessionUser = sessionUser;

@@ -1,6 +1,4 @@
 package ru.mail.track;
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -24,7 +22,7 @@ public class Main {
         Session session = new Session();
 
         //Нужно добавить файловое хранилище
-        UserStore userStore = new UserLocalStore();
+        UserStore userStore = new UserFileStore("users");
         AuthorizationService authService = new AuthorizationService(userStore);
         DataStorage dataStorage = new DataFileStorage(session);
 

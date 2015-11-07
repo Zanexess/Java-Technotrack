@@ -4,17 +4,37 @@ package ru.mail.track.comands;
  * В дальнейшем сделать логи на базе этого с различными кодами ошибок
  */
 public class Result {
-    private int errorNumber;
+    enum Status {
+        Success,
+        Error,
+        InvalidInput,
+        LoginError,
+    }
+    private Status status;
+    private String info;
 
-    // Храним номер ошибки.
-    // 1   - успешное завершение
-    // -1  - некорректное завершение
-    // -2  - неверный ввод
-    public Result (int number) {
-        errorNumber = number;
+    Result(Status status){
+        this.status = status;
     }
 
-    public int getResult() {
-        return errorNumber;
+    Result(Status status, String info){
+        this.status = status;
+        this.info = info;
+    }
+
+    public void setStatus(Status status){
+        this.status = status;
+    }
+
+    public void setInfo(String info){
+        this.info = info;
+    }
+
+    public String getInfo(){
+        return info;
+    }
+
+    public Status getStatus(){
+        return status;
     }
 }

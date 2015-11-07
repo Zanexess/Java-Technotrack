@@ -1,7 +1,6 @@
 package ru.mail.track.session;
 
 public class User {
-
     private String nickName;
     private String name;
     private String pass;
@@ -14,7 +13,7 @@ public class User {
     public User(String nickName, String name, String pass) {
         this.nickName = nickName;
         this.pass = pass;
-        this.nickName = name;
+        this.name = name;
     }
 
     public String getName() {

@@ -21,6 +21,6 @@ public class HelpCommand implements Command {
         for (Map.Entry entry: commands.entrySet()) {
             System.out.println("\t" + entry.getKey());
         }
-        return new Result(1);
+        return new Result(Result.Status.Success);
     }
 }

@@ -12,7 +12,8 @@ public class SessionInfoCommand implements Command {
             System.out.println(session.getSessionUser().toString());
         } catch (NullPointerException e) {
             System.out.println("User is not log in");
+            return new Result(Result.Status.LoginError);
         }
-        return new Result(1);
+        return new Result(Result.Status.Success);
     }
 }

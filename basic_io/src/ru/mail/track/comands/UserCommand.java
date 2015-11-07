@@ -13,9 +13,9 @@ public class UserCommand implements Command {
                 session.getSessionUser().setNickName(args[1]);
             }
         } else {
-            return new Result(-2);
+            return new Result(Result.Status.InvalidInput);
         }
-        return new Result(1);
+        return new Result(Result.Status.Success);
     }
 
 }

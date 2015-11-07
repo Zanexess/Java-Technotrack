@@ -1,6 +1,7 @@
 package ru.mail.track.comands;
 
 import ru.mail.track.data.DataStorage;
+import ru.mail.track.data.Message;
 import ru.mail.track.session.Session;
 
 import java.util.ArrayList;
@@ -19,17 +20,18 @@ public class FindCommand implements Command {
     @Override
     public Result execute(Session session, String[] args) {
         if (args.length != 2) {
-            return new Result(-1);
+            return new Result(Result.Status.InvalidInput, "Find must have 2 arguments; Example \\find word");
         } else {
-            List<String> history = dataStorage.getHistory(-1);
-            for (String str: history) {
-                String[] tokens = str.split(" ");
+            List<Message> history = dataStorage.getHistory(-1);
+            for (Message message: history) {
+                String[] tokens = message.getMessage().split(" ");
                 for (String temp: tokens)
                     if (temp != null && temp.equals(args[1])) {
-                        System.out.println("Word " + args[1] + " found at string: " + str);
+                        System.out.println("Word " + args[1] + " found at Message "
+                                + message.getMessage());
                     }
             }
         }
-        return new Result(1);
+        return new Result(Result.Status.Success);
     }
 }

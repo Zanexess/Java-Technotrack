@@ -12,7 +12,7 @@ import java.util.List;
 public class DataFileStorage implements DataStorage {
 
     private Session session;
-    private List<String> lines;
+    private List<Message> lines;
     private File file;
     private FileWriter writer = null;
     private BufferedReader reader = null;
@@ -23,63 +23,74 @@ public class DataFileStorage implements DataStorage {
     }
 
     @Override
-    public void addMessage(String str) {
-        try {
+    public void addMessage(Message message) {
+        if (session.isUserAuthentificated()) {
             path = session.getSessionUser().getName();
-            writer = new FileWriter(path, true);
-            writer.write(str);
-            writer.close();
-        } catch (FileNotFoundException e) {
-            file = new File(path);
-            addMessage(str);
-        } catch (IOException e) {
-            System.out.println("IOStream Error");
+        } else {
+            System.out.println("You not log in");
+            return;
         }
 
+        try {
+            writer = new FileWriter(path, true);
+            writer.write(message.getMessage() + " | " + message.getTimestamp() + "\n");
+        } catch (FileNotFoundException e) {
+            file = new File(path);
+            addMessage(message);
+        } catch (IOException e) {
+            System.out.println("IOStream Error");
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                System.out.println("IOStream Error");
+            } catch (NullPointerException e){
+
+            }
+        }
     }
 
 
     @Override
-    public List<String> getHistory(int n) {
-        try {
+    public List<Message> getHistory(int n) {
+        if (session.isUserAuthentificated())
             path = session.getSessionUser().getName();
+        else {
+            System.out.println("You not log in");
+            return null;
+        }
+
+        try {
             reader = new BufferedReader(new FileReader(path));
             String line;
-            lines = new ArrayList<String>();
+            lines = new ArrayList<Message>();
             while ((line = reader.readLine()) != null) {
-                lines.add(line);
+                lines.add(new Message(line));
             }
         } catch (FileNotFoundException e) {
             System.out.println("History is empty");
         } catch (IOException e) {
             System.out.println("IOStream Error");
-        } catch (NullPointerException e) {
-            System.out.println("You not log in");
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                System.out.println("IOStream Error");
+            } catch (NullPointerException e) {}
         }
 
-        List<String> nLines = new ArrayList<String>();
+        List<Message> nLines = new ArrayList<Message>();
         if (n >= 0) {
-            if (lines.size() <= n)
-            {
-                return lines;
-            } else {
+            if (lines.size() > n) {
                 for (int i = lines.size() - n; i < lines.size(); i++) {
                     nLines.add(lines.get(i));
                 }
                 return nLines;
+            } else {
+                return lines;
             }
         } else {
-            return lines;
+            return null;
         }
-    }
-
-    @Override
-    public void printHistory(List<String> history) {
-
-        if (history != null)
-            for (String str: history) {
-                System.out.println(str);
-            }
-        history = null;
     }
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import ru.mail.track.comands.Command;
 import ru.mail.track.data.DataStorage;
+import ru.mail.track.data.Message;
 import ru.mail.track.session.Session;
 
 public class InputHandler {
@@ -39,7 +40,8 @@ public class InputHandler {
             if (session.getSessionUser() == null) {
                 System.out.println(">" + data);
             } else {
-                dataStorage.addMessage(data + " | " + getDateTime() + "\n");
+                dataStorage.addMessage(new Message(data));
+                //dataStorage.addMessage(data + " | " + getDateTime() + "\n");
                 System.out.println("<" + data);
             }
         }

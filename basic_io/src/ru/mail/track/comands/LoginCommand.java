@@ -23,11 +23,12 @@ public class LoginCommand implements Command {
             } else if (args.length == 1) {
                 service.createUser();
             } else {
-                return new Result(-2);
+                return new Result(Result.Status.InvalidInput);
             }
         } else {
             System.out.println("User already log in.");
+            return new Result(Result.Status.LoginError);
         }
-        return new Result(1);
+        return new Result(Result.Status.Success);
     }
 }

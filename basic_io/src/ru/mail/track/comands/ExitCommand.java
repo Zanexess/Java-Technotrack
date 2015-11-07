@@ -11,12 +11,10 @@ public class ExitCommand implements Command {
         if (session.getSessionUser() != null) {
             System.out.println("You successfully log out");
             session.setSessionUser(null);
-            return new Result(1);
+            return new Result(Result.Status.Success);
         } else {
             System.out.println("User is not log in");
-            return new Result(1);
+            return new Result(Result.Status.LoginError);
         }
-
-
     }
 }

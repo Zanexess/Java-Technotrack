@@ -47,11 +47,16 @@ public class UserFileStore implements UserStore {
         try {
             writer = new FileWriter(path, true);
             writer.write(user.toString());
-            writer.close();
         } catch (FileNotFoundException e) {
             file = new File(path);
         } catch (IOException e) {
             System.out.println("IOStream Error");
+        } finally {
+            try{
+                writer.close();
+            } catch (IOException e){
+                System.out.println("IOStream Error");
+            }
         }
     }
 
@@ -72,6 +77,12 @@ public class UserFileStore implements UserStore {
             System.out.println("IOStream Error");
         } catch (NullPointerException e) {
             System.out.println("You not log in");
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e){
+                System.out.println("IOStream Error");
+            }
         }
         return null;
     }
