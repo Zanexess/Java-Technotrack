@@ -11,13 +11,19 @@ public class Result {
         LoginError,
     }
     private Status status;
-    private String info;
+    private String[] info;
 
     Result(Status status){
         this.status = status;
     }
 
     Result(Status status, String info){
+        this.status = status;
+        this.info = new String[1];
+        this.info[0] = info;
+    }
+
+    Result(Status status, String[] info){
         this.status = status;
         this.info = info;
     }
@@ -27,10 +33,10 @@ public class Result {
     }
 
     public void setInfo(String info){
-        this.info = info;
+        this.info[0] = info;
     }
 
-    public String getInfo(){
+    public String[] getInfo(){
         return info;
     }
 

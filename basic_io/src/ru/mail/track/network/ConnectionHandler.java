@@ -2,6 +2,7 @@ package ru.mail.track.network;
 
 import java.io.IOException;
 
+import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.data.Message;
 
 /**
@@ -9,7 +10,7 @@ import ru.mail.track.data.Message;
  */
 public interface ConnectionHandler extends Runnable {
 
-    void send(Message msg) throws IOException;
+    void send(MessageBase msg) throws IOException;
 
     void addListener(MessageListener listener);
 

@@ -21,7 +21,6 @@ public class UserFileStore implements UserStore {
         this.path = path;
     }
 
-    @Override
     public boolean isUserExist(String name) {
         try {
             reader = new BufferedReader(new FileReader(path));
@@ -42,7 +41,6 @@ public class UserFileStore implements UserStore {
         return false;
     }
 
-    @Override
     public void addUser(User user) {
         try {
             writer = new FileWriter(path, true);
@@ -60,7 +58,6 @@ public class UserFileStore implements UserStore {
         }
     }
 
-    @Override
     public User getUser(String name, String pass) {
         try {
             reader = new BufferedReader(new FileReader(path));
@@ -84,6 +81,11 @@ public class UserFileStore implements UserStore {
                 System.out.println("IOStream Error");
             }
         }
+        return null;
+    }
+
+    public User getUser(Long id){
+        System.out.println("Not Supported by UserFileStore");
         return null;
     }
 }

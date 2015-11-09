@@ -2,6 +2,7 @@ package ru.mail.track.comands;
 
 import java.util.Map;
 
+import ru.mail.track.Messeges.MessageType;
 import ru.mail.track.session.Session;
 
 /**
@@ -9,18 +10,20 @@ import ru.mail.track.session.Session;
  */
 public class HelpCommand implements Command {
 
-    private Map<String, Command> commands;
+    private Map<MessageType, Command> commands;
 
-    public HelpCommand(Map<String, Command> commands) {
+    public HelpCommand(Map<MessageType, Command> commands) {
         this.commands = commands;
     }
 
-    @Override
     public Result execute(Session session, String[] args) {
-        System.out.println("Commands:");
+        String data[] = new String[commands.size()+1];
+        data[0] = "Commands: ";
+        int i = 1;
         for (Map.Entry entry: commands.entrySet()) {
-            System.out.println("\t" + entry.getKey());
+            data[i] = "\t" + entry.getKey();
+            i++;
         }
-        return new Result(Result.Status.Success);
+        return new Result(Result.Status.Success, data);
     }
 }

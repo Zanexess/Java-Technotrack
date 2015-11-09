@@ -1,17 +1,18 @@
 package ru.mail.track.network;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.data.Message;
 import ru.mail.track.network.ConnectionHandler;
 import ru.mail.track.network.MessageListener;
 import ru.mail.track.network.Protocol;
+import ru.mail.track.session.Session;
 
 
 /**
@@ -21,47 +22,48 @@ import ru.mail.track.network.Protocol;
 public class SocketConnectionHandler implements ConnectionHandler {
 
     // подписчики
-    private List<MessageListener> listeners = new ArrayList<>();
+    private List<MessageListener> listeners = new ArrayList<MessageListener>();
     private Socket socket;
     private InputStream in;
     private OutputStream out;
+    private Protocol protocol;
+    private Session session;
 
-    public SocketConnectionHandler(Socket socket) throws IOException {
+    public SocketConnectionHandler(Protocol protocol, Session session, Socket socket) throws IOException {
+        this.protocol = protocol;
         this.socket = socket;
+        this.session = session;
+        session.setConnectionHandler(this);
         in = socket.getInputStream();
         out = socket.getOutputStream();
     }
 
-    @Override
-    public void send(Message msg) throws IOException {
-        // TODO: здесь должен быть встроен алгоритм кодирования/декодирования сообщений
-        // то есть требуется описать протокол
-        out.write(Protocol.encode(msg));
+    public void send(MessageBase msg) throws IOException {
+        out.write(protocol.encode(msg));
         out.flush();
     }
 
     // Добавить еще подписчика
-    @Override
     public void addListener(MessageListener listener) {
         listeners.add(listener);
     }
 
 
     // Разослать всем
-    public void notifyListeners(Message msg) {
-        listeners.forEach(it -> it.onMessage(msg));
+    public void notifyListeners(MessageBase msg) {
+        for (MessageListener it : listeners){
+            it.onMessage(session, msg);
+        }
     }
 
-    @Override
     public void run() {
         final byte[] buf = new byte[1024 * 64];
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 int read = in.read(buf);
                 if (read > 0) {
-                    Message msg = Protocol.decode(Arrays.copyOf(buf, read));
-
-                    // Уведомим всех подписчиков этого события
+                    byte[] bytes = Arrays.copyOf(buf, read);
+                    MessageBase msg = protocol.decode(bytes);
                     notifyListeners(msg);
                 }
             } catch (Exception e) {
@@ -71,7 +73,6 @@ public class SocketConnectionHandler implements ConnectionHandler {
         }
     }
 
-    @Override
     public void stop() {
         Thread.currentThread().interrupt();
     }

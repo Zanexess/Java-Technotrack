@@ -11,4 +11,6 @@ public interface  UserStore {
     void addUser(User user);
 
     User getUser(String name, String pass);
+
+    User getUser(Long id);
 }

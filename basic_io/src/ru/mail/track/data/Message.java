@@ -1,19 +1,30 @@
 package ru.mail.track.data;
 
-import java.security.Timestamp;
+import java.util.Date;
 
 public class Message {
+    private static long id = 0;
+    private Long MessageId;
     private String message;
     private Long senderId;
     private Long chatId;
-    private Long timestamp;
+    //private Long timestamp;
+    private String timestamp;
+
+
+    public Message(){
+
+    }
 
     public Message(String message) {
         this.message = message;
-        timestamp = System.currentTimeMillis()/1000;
+        id++;
+        MessageId = id;
+        timestamp = new Date(System.currentTimeMillis()).toString();
+        //timestamp = System.currentTimeMillis()/1000;
     }
 
-    public Long getTimestamp(){
+    public String getTimestamp(){
         return timestamp;
     }
 

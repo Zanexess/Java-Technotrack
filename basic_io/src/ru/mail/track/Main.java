@@ -18,30 +18,32 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Map<String, Command> commands = new HashMap<>();
+        Map<String, Command> commands = new HashMap<String, Command>();
         Session session = new Session();
 
         //Нужно добавить файловое хранилище
-        UserStore userStore = new UserFileStore("users");
+        UserStore userStore = new UserLocalStore();
         AuthorizationService authService = new AuthorizationService(userStore);
         DataStorage dataStorage = new DataFileStorage(session);
 
         //Создаем команды
-        Command loginCommand = new LoginCommand(authService);
-        Command helpCommand = new HelpCommand(commands);
+        //Command loginCommand = new LoginCommand(authService);
+        //Command helpCommand = new HelpCommand(commands);
         Command userCommand = new UserCommand();
         Command historyCommand = new HistoryCommand(dataStorage);
-        Command sessionInfo = new SessionInfoCommand();
+        Command sessionInfo = new SessionInfoCommand(userStore);
         Command exitProfile = new ExitCommand();
         Command findCommand = new FindCommand(dataStorage);
+        //Command changePasswordCommand = new ChangePasswordCommand();
 
-        commands.put("\\login", loginCommand);       //+
-        commands.put("\\help", helpCommand);         //+
+        //commands.put("\\login", loginCommand);       //+
+       // commands.put("\\help", helpCommand);         //+
         commands.put("\\user", userCommand);         //+
         commands.put("\\history", historyCommand);   //+
         commands.put("\\info", sessionInfo);         //+
         commands.put("\\exit", exitProfile);         //+
         commands.put("\\find", findCommand);         //+
+        //commands.put("\\user_pass", changePasswordCommand);
 
 
         InputHandler handler = new InputHandler(session, commands, dataStorage);

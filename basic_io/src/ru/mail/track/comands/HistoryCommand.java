@@ -16,7 +16,6 @@ public class HistoryCommand implements Command {
         this.dataStorage = dataStorage;
     }
 
-    @Override
     public Result execute(Session session, String[] args) {
         if (args.length == 1) {
             List<Message> history = dataStorage.getHistory(Integer.MAX_VALUE);

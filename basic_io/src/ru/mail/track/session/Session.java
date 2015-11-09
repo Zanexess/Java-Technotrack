@@ -1,12 +1,30 @@
 package ru.mail.track.session;
 
 
-public class Session {
+import ru.mail.track.network.ConnectionHandler;
 
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class Session {
     private User sessionUser;
+    private Long id;
+    private ConnectionHandler connectionHandler;
+
+    public ConnectionHandler getConnectionHandler() {
+        return connectionHandler;
+    }
+
+    public void setConnectionHandler(ConnectionHandler connectionHandler) {
+        this.connectionHandler = connectionHandler;
+    }
 
     public Session() {
 
+    }
+
+    public Session(Long id){
+        this.id = id;
     }
 
     public boolean isUserAuthentificated() {
@@ -20,5 +38,9 @@ public class Session {
 
     public void setSessionUser(User sessionUser) {
         this.sessionUser = sessionUser;
+    }
+
+    public Long getId(){
+        return id;
     }
 }
