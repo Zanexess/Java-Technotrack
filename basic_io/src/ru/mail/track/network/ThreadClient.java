@@ -4,6 +4,8 @@ import java.net.Socket;
 import java.util.Scanner;
 import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.Messeges.MessageType;
+import ru.mail.track.data.Chat;
+import ru.mail.track.data.Message;
 import ru.mail.track.session.Session;
 
 /**
@@ -56,6 +58,12 @@ public class ThreadClient implements MessageListener {
                 msg = new MessageBase(MessageType.MSG_USER, args);
             } else if (args[0] != null && args[0].equals("\\user_pass")) {
                 msg = new MessageBase(MessageType.MSG_USERPASS, args);
+            } else if (args[0] != null && args[0].equals("\\chat_list")) {
+                msg = new MessageBase(MessageType.MSG_CHATLIST, args);
+            } else if (args[0] != null && args[0].equals("\\chat_create")) {
+                msg = new MessageBase(MessageType.MSG_CHATCREATE, args);
+            } else if (args[0] != null && args[0].equals("\\chat_send")) {
+                msg = new MessageBase(MessageType.MSG_CHATSEND, args);
             }
         }
         handler.send(msg);
@@ -67,18 +75,23 @@ public class ThreadClient implements MessageListener {
         else if (msg.getMessageType() == MessageType.SRV_ERROR)
             System.out.println("ERROR: " + msg.getArgs()[0]);
         else if (msg.getMessageType() == MessageType.SRV_SUCCESS) {
-            System.out.println("SUCCESS: " + msg.getArgs()[0]);
-            for (int i = 1; i < msg.getArgs().length; i++){
-                System.out.println(msg.getArgs()[i]);
+            System.out.println("SUCCESS: ");
+            for (int i = 0; i < msg.getArgs().length; i++) {
+                System.out.print(msg.getArgs()[i] + " ");
+                System.out.println();
+            }
+        } else if (msg.getMessageType() == MessageType.SRV_LOGINERROR) {
+            System.out.println("LOGIN ERROR: " + msg.getArgs()[0]);
+        } else if (msg.getMessageType() == MessageType.SRV_INVALIDINPUT) {
+            System.out.println("INVALID INPUT: " + msg.getArgs()[0]);
+        } else if (msg.getMessageType() == MessageType.SRV_NEWMESSAGE) {
+            System.out.println("NEWMESSAGE: ");
+            for (int i = 0; i < msg.getArgs().length; i++) {
+                System.out.print(msg.getArgs()[i] + " ");
+                System.out.println();
             }
         }
-        else if (msg.getMessageType() == MessageType.SRV_LOGINERROR){
-            System.out.println("LOGIN ERROR: " + msg.getArgs()[0]);
-        } else if (msg.getMessageType() == MessageType.SRV_INVALIDINPUT){
-            System.out.println("INVALID INPUT: " + msg.getArgs()[0]);
-        }
     }
-
 
     public static void main(String[] args) throws Exception{
         ThreadClient client = new ThreadClient();

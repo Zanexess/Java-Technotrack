@@ -9,6 +9,7 @@ public class Result {
         Error,
         InvalidInput,
         LoginError,
+        SendSuccess,
     }
     private Status status;
     private String[] info;

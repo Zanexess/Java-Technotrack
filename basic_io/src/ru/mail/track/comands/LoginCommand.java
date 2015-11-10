@@ -23,8 +23,10 @@ public class LoginCommand implements Command {
         if (session.getSessionUser() == null) {
             if (args.length == 3) {
                 User user = service.login(args[1], args[2]);
-                if (user != null)
+                if (user != null) {
                     session.setSessionUser(user);
+                    sessionManager.registerUser(user.getId(), session.getId());
+                }
                 else return new Result(Result.Status.LoginError, "Login or password are incorrect");
             } else {
                 return new Result(Result.Status.InvalidInput,

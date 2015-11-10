@@ -7,16 +7,17 @@ public enum MessageType{
     //Команды
     MSG_LOGIN,        //+
     MSG_REGISTER,     //+
-    MSG_SEND,
     MSG_HELP,         //+
-    MSG_FIND,
-    MSG_HISTORY,
     MSG_INFO,         //+
     MSG_USER,         //+
     MSG_USERPASS,     //+
     MSG_LOGOUT,       //+
     MSG_ERROR,        //+
-    MSG_CONFIGURE,    //+
+    MSG_CHATLIST,
+    MSG_CHATSEND,
+    MSG_CHATCREATE,
+    MSG_CHATHISTORY,
+    MSG_CHATFIND,
 
     //Ответы сервера
     SRV_SUCCESS,      //+
@@ -24,4 +25,5 @@ public enum MessageType{
     SRV_INVALIDINPUT, //+
     SRV_LOGINERROR,   //+
     SRV_LOGINSUCCESS, //+
+    SRV_NEWMESSAGE,
 }

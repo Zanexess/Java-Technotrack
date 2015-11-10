@@ -33,6 +33,9 @@ public class CommandHandler implements MessageListener {
             } else if (result.getStatus() == Result.Status.InvalidInput) {
                 msg = new MessageBase(MessageType.SRV_LOGINSUCCESS, result.getInfo());
             }
+//            else if (result.getStatus() == Result.Status.SendSuccess) {
+//                msg = new MessageBase(MessageType.SRV_NEWMESSAGE, result.getInfo());
+//            }
         } else {
             String[] info = new String[1];
             info[0] = "Invalid Input";

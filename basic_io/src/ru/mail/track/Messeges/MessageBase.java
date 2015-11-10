@@ -9,6 +9,8 @@ public class MessageBase implements Serializable {
 
     private MessageType messageType;
     private String args[];
+    private Message msg;
+
     MessageBase(){
 
     }
@@ -18,11 +20,21 @@ public class MessageBase implements Serializable {
         this.args = args;
     }
 
+    public MessageBase(MessageType messageType, String args[], Message msg){
+        this.messageType = messageType;
+        this.args = args;
+        this.msg = msg;
+    }
+
     public MessageType getMessageType(){
         return messageType;
     }
 
     public String[] getArgs(){
         return args;
+    }
+
+    public Message getMsg() {
+        return msg;
     }
 }

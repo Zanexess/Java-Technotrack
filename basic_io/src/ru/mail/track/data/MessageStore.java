@@ -10,7 +10,7 @@ public interface MessageStore {
     /**
      получаем список ид пользователей заданного чата
      */
-    List<Long> getChatsByUserId(Long userId);
+    List<Long> getParticipantByChatId(Long chatId);
 
     /**
      получить информацию о чате
@@ -33,9 +33,19 @@ public interface MessageStore {
      */
     void addMessage(Long messageId, Long chatId);
 
+
     /**
      * Добавить пользователя к чату
      */
     void addUserToChat(Long userId, Long chatId);
+    /*
+     *Чаты пользователя по id
+     */
+
+    List<Long> getChatsByUserId(Long userId);
+
+    void addChat(Chat chat);
+
+    void addMessage(Message msg);
 
 }

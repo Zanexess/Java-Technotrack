@@ -84,7 +84,10 @@ public class ThreadedServer implements MessageListener {
         cmds.put(MessageType.MSG_HELP, new HelpCommand(cmds));
         cmds.put(MessageType.MSG_USER, new UserCommand());
         cmds.put(MessageType.MSG_USERPASS, new UserPassCommand());
-        //cmds.put(CommandType.MSG_SEND, new SendCommand(sessionManager, messageStore));
+        cmds.put(MessageType.MSG_CHATLIST, new ChatListCommand(messageStore));
+        cmds.put(MessageType.MSG_CHATCREATE, new ChatCreateCommand(messageStore));
+        cmds.put(MessageType.MSG_CHATSEND, new ChatSendCommand(sessionManager, messageStore));
+
         CommandHandler handler = new CommandHandler(cmds);
 
         ThreadedServer server = new ThreadedServer(protocol, sessionManager, handler);

@@ -3,14 +3,11 @@ package ru.mail.track.data;
 import java.util.Date;
 
 public class Message {
-    private static long id = 0;
-    private Long MessageId;
+    private Long messageId;
     private String message;
     private Long senderId;
     private Long chatId;
-    //private Long timestamp;
     private String timestamp;
-
 
     public Message(){
 
@@ -18,10 +15,14 @@ public class Message {
 
     public Message(String message) {
         this.message = message;
-        id++;
-        MessageId = id;
         timestamp = new Date(System.currentTimeMillis()).toString();
-        //timestamp = System.currentTimeMillis()/1000;
+    }
+
+    public Message (String message, Long senderId, Long chatId, Long messageId){
+        this.message = message;
+        this.senderId = senderId;
+        this.chatId = chatId;
+        this.messageId = messageId;
     }
 
     public String getTimestamp(){
@@ -56,9 +57,22 @@ public class Message {
         this.senderId = senderId;
     }
 
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
+                "messageId= " + messageId + '\'' +
                 "senderId= " + senderId + '\'' +
                 ", message=" + message + '\'' +
                 ", timestamp=" + timestamp + '\'' +
