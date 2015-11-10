@@ -3,7 +3,8 @@ package ru.mail.track.session;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class User {
-    private AtomicLong userId = new AtomicLong(0);
+    //Из-за того, что UserStoreStub содержит 4 юзеров, для логичности
+    private AtomicLong userId = new AtomicLong(3);
     private String nickName;
     private String name;
     private String pass;
