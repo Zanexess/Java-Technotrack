@@ -17,13 +17,21 @@ public class HelpCommand implements Command {
     }
 
     public Result execute(Session session, String[] args) {
-        String data[] = new String[commands.size()+1];
+        String data[] = new String[12];
         data[0] = "Commands: ";
-        int i = 1;
-        for (Map.Entry entry: commands.entrySet()) {
-            data[i] = "\t" + entry.getKey();
-            i++;
-        }
+
+        data[1] = "\t\\login <Username> <Password>";
+        data[2] = "\t\\logout";
+        data[3] = "\t\\register <Username> <Password>";
+        data[4] = "\t\\info <int id>";
+        data[5] = "\t\\help";
+        data[6] = "\t\\user <int id>";
+        data[7] = "\t\\user_pass <old_password> <new_password>";
+        data[8] = "\t\\chat_list";
+        data[9] = "\t\\chat_create <userId list>";
+        data[10] = "\t\\chat_send <Text>";
+        data[11] = "\t\\chat_history";
+
         return new Result(Result.Status.Success, data);
     }
 }
