@@ -2,6 +2,7 @@ package ru.mail.track.data;
 
 
 import com.sun.xml.internal.ws.server.sei.ValueGetter;
+import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.session.User;
 
 import java.util.*;
@@ -13,7 +14,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MessageStoreStub implements MessageStore {
 
     public static final AtomicLong counter = new AtomicLong(4);
-    static final long id = 4;
+    static long id = 5;
+
 
     List<Message> messages1 = Arrays.asList(
             new Message(1L, "msg1_1"),
@@ -50,13 +52,18 @@ public class MessageStoreStub implements MessageStore {
         chat3.addParticipant(2L);
         chat3.addParticipant(3L);
 
+        Chat chat4 = new Chat();
+        chat4.addParticipant(0L);
+
         chats.put(1L, chat1);
         chats.put(2L, chat2);
         chats.put(3L, chat3);
+        chats.put(4L, chat4);
     }
 
     public void addChat(Chat chat){
         chats.put(id, chat);
+        id++;
     }
 
     public void addMessage(Long messageId, Long chatId) {
@@ -94,5 +101,9 @@ public class MessageStoreStub implements MessageStore {
 
     public void addMessage(Message msg){
         messages.put(msg.getMessageId(), msg);
+    }
+
+    public Message getMessagesById(Long messageId){
+        return messages.get(messageId);
     }
 }

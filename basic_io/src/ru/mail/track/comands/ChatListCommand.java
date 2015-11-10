@@ -6,9 +6,7 @@ import ru.mail.track.session.Session;
 
 import java.util.List;
 
-/**
- * Created by zanexess on 10.11.15.
- */
+
 public class ChatListCommand implements Command {
 
     private MessageStore messageStore;

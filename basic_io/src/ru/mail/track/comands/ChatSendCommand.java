@@ -12,9 +12,6 @@ import ru.mail.track.session.Session;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by zanexess on 10.11.15.
- */
 public class ChatSendCommand implements Command {
     private MessageStore messageStore;
     private SessionManager sessionManager;
@@ -39,18 +36,21 @@ public class ChatSendCommand implements Command {
                     return new Result(Result.Status.InvalidInput, "Parsing problem");
                 }
 
-                if (messageStore.getChatsByUserId(session.getId()).contains(aLong)){
-
-                    String str = new String();
+                if (messageStore.getChatsByUserId(session.getSessionUser().getId()).contains(aLong)){
+                    StringBuilder builder = new StringBuilder();
                     for (int i = 2; i < args.length; i++){
-                        //плохо, проверяю работоспособность
-                        str = str + " " + args[i];
+                        builder.append(" " + args[i]);
                     }
+                    String str = builder.toString();
+
                     Message msg = new Message(str, session.getSessionUser().getId(), aLong, messagesCounter);
                     messageStore.addMessage(msg);
                     messagesCounter++;
+
+                    //TODO исправить, пока для теста
                     String[] string = new String[1];
                     string[0] = msg.getMessage();
+
                     MessageBase mm = new MessageBase(MessageType.SRV_NEWMESSAGE, string, msg);
 
                     Chat chat = messageStore.getChatById(aLong);
@@ -61,7 +61,6 @@ public class ChatSendCommand implements Command {
                             if (userSession != null){
                                 System.out.println(userId + " session");
                                 userSession.getConnectionHandler().send(mm);
-                                return new Result(Result.Status.Success, "");
                             } else {
 
                             }
@@ -70,8 +69,6 @@ public class ChatSendCommand implements Command {
                     } catch (IOException e){
                         return new Result(Result.Status.Error, "");
                     }
-//
-//                    return new Result(Result.Status.SendSuccess, msg.getMessage());
                 } else {
                     return new Result(Result.Status.Error, "The chat doesn't exist");
                 }

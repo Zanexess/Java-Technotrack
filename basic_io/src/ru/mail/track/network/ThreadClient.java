@@ -64,6 +64,8 @@ public class ThreadClient implements MessageListener {
                 msg = new MessageBase(MessageType.MSG_CHATCREATE, args);
             } else if (args[0] != null && args[0].equals("\\chat_send")) {
                 msg = new MessageBase(MessageType.MSG_CHATSEND, args);
+            } else if (args[0] != null && args[0].equals("\\chat_history")) {
+                msg = new MessageBase(MessageType.MSG_CHATHISTORY, args);
             }
         }
         handler.send(msg);

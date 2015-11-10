@@ -6,9 +6,6 @@ import ru.mail.track.session.Session;
 
 import java.util.List;
 
-/**
- * Created by zanexess on 10.11.15.
- */
 public class ChatCreateCommand implements Command {
     private MessageStore messageStore;
 
@@ -24,8 +21,11 @@ public class ChatCreateCommand implements Command {
             } else if (args.length == 2) {
                 Long id = Long.parseLong(args[1]);
                 Long aLong = session.getSessionUser().getId();
+                String[] strings = new String[2];
+                strings[0] = "The chat already exists";
+                strings[1] = id.toString();
                 if (messageStore.getChatsByUserId(aLong).contains(id)) ;
-                    return new Result(Result.Status.Success, "The chat already exists");
+                    return new Result(Result.Status.Success, strings);
             } else {
                 Chat chat = new Chat();
                 for (int i = 1; i < args.length; i++) {

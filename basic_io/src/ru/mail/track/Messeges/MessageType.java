@@ -13,9 +13,9 @@ public enum MessageType{
     MSG_USERPASS,     //+
     MSG_LOGOUT,       //+
     MSG_ERROR,        //+
-    MSG_CHATLIST,
-    MSG_CHATSEND,
-    MSG_CHATCREATE,
+    MSG_CHATLIST,     //+
+    MSG_CHATSEND,     //+
+    MSG_CHATCREATE,   //+
     MSG_CHATHISTORY,
     MSG_CHATFIND,
 
@@ -25,5 +25,5 @@ public enum MessageType{
     SRV_INVALIDINPUT, //+
     SRV_LOGINERROR,   //+
     SRV_LOGINSUCCESS, //+
-    SRV_NEWMESSAGE,
+    SRV_NEWMESSAGE,   //+
 }
