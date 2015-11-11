@@ -31,7 +31,7 @@ public class ChatCreateCommand implements Command {
                 for (int i = 1; i < args.length; i++) {
                     try {
                         chat.addParticipant(Long.parseLong(args[i]));
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         return new Result(Result.Status.InvalidInput, "Parsing Wrong");
                     }
                 }

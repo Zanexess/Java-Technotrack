@@ -32,7 +32,7 @@ public class ChatSendCommand implements Command {
 
                 try {
                    aLong  = Long.parseLong(args[1]);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     return new Result(Result.Status.InvalidInput, "Parsing problem");
                 }
 
@@ -42,6 +42,8 @@ public class ChatSendCommand implements Command {
                         builder.append(" " + args[i]);
                     }
                     String str = builder.toString();
+
+                    messageStore.getChatById(aLong).addMessage(messagesCounter);
 
                     Message msg = new Message(str, session.getSessionUser().getId(), aLong, messagesCounter);
                     messageStore.addMessage(msg);

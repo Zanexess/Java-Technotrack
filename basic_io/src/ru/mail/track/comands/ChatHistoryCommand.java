@@ -25,12 +25,12 @@ public class ChatHistoryCommand implements Command {
                 //Не особо верно, но будет работать
                 try {
                     aLong = Long.parseLong(args[1]);
-                } catch (Exception e){
-                    //Знаю, что не все нужно ловить, но забыл класс той ошибки при парсинге, а уже время поджимает
+                } catch (NumberFormatException e){
                     return new Result(Result.Status.InvalidInput, "Parsing problem");
                 }
                 //TODO Исправить
                 List<Long> messages = messageStore.getMessagesFromChat(aLong);
+                System.out.println(messages.size());
                 StringBuilder builder = new StringBuilder();
                 for (Long id : messages){
                     System.out.println(id);
