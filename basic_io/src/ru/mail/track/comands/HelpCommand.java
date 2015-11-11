@@ -20,17 +20,18 @@ public class HelpCommand implements Command {
         String data[] = new String[12];
         data[0] = "Commands: ";
 
-        data[1] = "\t\\login <Username> <Password>";
-        data[2] = "\t\\logout";
-        data[3] = "\t\\register <Username> <Password>";
-        data[4] = "\t\\info <int id>";
-        data[5] = "\t\\help";
-        data[6] = "\t\\user <int id>";
-        data[7] = "\t\\user_pass <old_password> <new_password>";
-        data[8] = "\t\\chat_list";
-        data[9] = "\t\\chat_create <userId list>";
-        data[10] = "\t\\chat_send <Text>";
-        data[11] = "\t\\chat_history";
+        data[0] = "\t\\login <Username> <Password>";
+        data[1] = "\t\\logout";
+        data[2] = "\t\\register <Username> <Password>";
+        data[3] = "\t\\info <int id>";
+        data[4] = "\t\\help";
+        data[5] = "\t\\user <int id>";
+        data[6] = "\t\\user_pass <old_password> <new_password>";
+        data[7] = "\t\\chat_list";
+        data[8] = "\t\\chat_create <userId list>";
+        data[9] = "\t\\chat_send <int id> <Text>";
+        data[10] = "\t\\chat_history";
+        data[11] = "\t\\chat_find <int id> <regex>";
 
         return new Result(Result.Status.Success, data);
     }

@@ -61,7 +61,6 @@ public class ChatSendCommand implements Command {
                         for (Long userId: parts) {
                             Session userSession = sessionManager.getSessionByUser(userId);
                             if (userSession != null){
-                                System.out.println(userId + " session");
                                 userSession.getConnectionHandler().send(mm);
                             } else {
 
