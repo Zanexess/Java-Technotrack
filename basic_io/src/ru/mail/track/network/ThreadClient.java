@@ -43,6 +43,9 @@ public class ThreadClient implements MessageListener {
     public void processInput(String line) throws IOException {
         String args[] = line.split(" ");
         MessageBase msg = new MessageBase(MessageType.MSG_ERROR, args);
+        // FIXME: то есть сначала вы вызываете args[0].startsWith
+        // а потом в каждой ветке проверяете != null - смысла никакого
+        // Также лучше воспользоваться оператором switch, if-else здесь не подходит
         if (args[0].startsWith("\\")) {
             if (args[0] != null && args[0].equals("\\exit")) {
                 msg = new MessageBase(MessageType.MSG_LOGOUT, args);
@@ -72,6 +75,11 @@ public class ThreadClient implements MessageListener {
     }
 
     public void onMessage(Session session, MessageBase msg) {
+
+        // FIXME: не надо на всякий случай. Если у Вас протокол может вернуть null - то проверяйте
+        // если нет, то это только путает
+
+        // FIXME: аналогично - use switch!
         if (msg == null)  //на всякий случай
             System.out.println("NULL");
         else if (msg.getMessageType() == MessageType.SRV_ERROR)

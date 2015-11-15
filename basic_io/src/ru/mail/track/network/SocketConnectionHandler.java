@@ -45,6 +45,7 @@ public class SocketConnectionHandler implements ConnectionHandler {
 
 
     // Разослать всем
+    // TODO: буду спрашивать что это и зачем и как работает =)
     public void notifyListeners(MessageBase msg) {
         for (MessageListener it : listeners){
             it.onMessage(session, msg);
