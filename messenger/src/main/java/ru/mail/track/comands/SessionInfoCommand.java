@@ -1,11 +1,8 @@
 package ru.mail.track.comands;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import ru.mail.track.authorization.UserStore;
 import ru.mail.track.session.Session;
 import ru.mail.track.session.User;
-
-import javax.jws.soap.SOAPBinding;
 
 /**
  * Информация о текущем пользователе

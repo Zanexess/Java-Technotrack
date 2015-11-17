@@ -1,6 +1,5 @@
 package ru.mail.track.comands;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import ru.mail.track.authorization.AuthorizationService;
 import ru.mail.track.network.SessionManager;
 import ru.mail.track.session.Session;

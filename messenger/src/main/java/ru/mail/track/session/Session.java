@@ -3,9 +3,6 @@ package ru.mail.track.session;
 
 import ru.mail.track.network.ConnectionHandler;
 
-import java.util.Locale;
-import java.util.concurrent.atomic.AtomicLong;
-
 public class Session {
     private User sessionUser;
     private Long id;

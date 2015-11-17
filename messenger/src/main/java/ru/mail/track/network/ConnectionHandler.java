@@ -3,7 +3,6 @@ package ru.mail.track.network;
 import java.io.IOException;
 
 import ru.mail.track.Messeges.MessageBase;
-import ru.mail.track.data.Message;
 
 /**
  * Обработчик сокета

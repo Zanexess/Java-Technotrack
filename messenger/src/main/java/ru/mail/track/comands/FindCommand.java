@@ -4,7 +4,6 @@ import ru.mail.track.data.DataStorage;
 import ru.mail.track.data.Message;
 import ru.mail.track.session.Session;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

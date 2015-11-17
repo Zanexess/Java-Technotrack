@@ -4,8 +4,6 @@ import ru.mail.track.data.Chat;
 import ru.mail.track.data.MessageStore;
 import ru.mail.track.session.Session;
 
-import java.util.List;
-
 public class ChatCreateCommand implements Command {
     private MessageStore messageStore;
 

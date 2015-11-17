@@ -4,7 +4,6 @@ import ru.mail.track.data.MessageStore;
 import ru.mail.track.session.Session;
 
 import java.util.List;
-import java.util.LongSummaryStatistics;
 
 
 public class ChatHistoryCommand implements Command {
@@ -28,7 +27,6 @@ public class ChatHistoryCommand implements Command {
                 } catch (NumberFormatException e){
                     return new Result(Result.Status.InvalidInput, "Parsing problem");
                 }
-                //TODO Исправить
                 List<Long> messages = messageStore.getMessagesFromChat(aLong);
                 System.out.println(messages.size());
                 StringBuilder builder = new StringBuilder();

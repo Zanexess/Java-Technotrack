@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import ru.mail.track.authorization.AuthorizationService;
-import ru.mail.track.authorization.UserFileStore;
 import ru.mail.track.authorization.UserLocalStore;
 import ru.mail.track.authorization.UserStore;
 import ru.mail.track.comands.*;

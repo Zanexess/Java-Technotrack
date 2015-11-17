@@ -1,6 +1,5 @@
 package ru.mail.track.comands;
 
-import com.sun.net.httpserver.Authenticator;
 import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.Messeges.MessageType;
 import ru.mail.track.data.Chat;
@@ -49,7 +48,6 @@ public class ChatSendCommand implements Command {
                     messageStore.addMessage(msg);
                     messagesCounter++;
 
-                    //TODO исправить, пока для теста
                     String[] string = new String[1];
                     string[0] = msg.getMessage();
 

@@ -2,8 +2,6 @@ package ru.mail.track.authorization;
 
 import ru.mail.track.session.User;
 
-import java.util.Scanner;
-
 public class AuthorizationService {
 
     private UserStore userStore;

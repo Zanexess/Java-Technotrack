@@ -5,8 +5,6 @@ import java.util.Scanner;
 import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.Messeges.MessageType;
 import ru.mail.track.Messeges.Request;
-import ru.mail.track.data.Chat;
-import ru.mail.track.data.Message;
 import ru.mail.track.session.Session;
 
 /**
