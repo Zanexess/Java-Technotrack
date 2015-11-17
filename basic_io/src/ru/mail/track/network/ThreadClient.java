@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.util.Scanner;
 import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.Messeges.MessageType;
+import ru.mail.track.Messeges.Request;
 import ru.mail.track.data.Chat;
 import ru.mail.track.data.Message;
 import ru.mail.track.session.Session;
@@ -41,59 +42,83 @@ public class ThreadClient implements MessageListener {
     }
 
     public void processInput(String line) throws IOException {
+        msg = null;
         String args[] = line.split(" ");
-        MessageBase msg = new MessageBase(MessageType.MSG_ERROR, args);
         if (args[0].startsWith("\\")) {
-            if (args[0] != null && args[0].equals("\\exit")) {
-                msg = new MessageBase(MessageType.MSG_LOGOUT, args);
-            } else if (args[0] != null && args[0].equals("\\login")) {
-                msg = new MessageBase(MessageType.MSG_LOGIN, args);
-            } else if (args[0] != null && args[0].equals("\\register")) {
-                msg = new MessageBase(MessageType.MSG_REGISTER, args);
-            } else if (args[0] != null && args[0].equals("\\info")) {
-                msg = new MessageBase(MessageType.MSG_INFO, args);
-            } else if (args[0] != null && args[0].equals("\\help")) {
-                msg = new MessageBase(MessageType.MSG_HELP, args);
-            } else if (args[0] != null && args[0].equals("\\user")) {
-                msg = new MessageBase(MessageType.MSG_USER, args);
-            } else if (args[0] != null && args[0].equals("\\user_pass")) {
-                msg = new MessageBase(MessageType.MSG_USERPASS, args);
-            } else if (args[0] != null && args[0].equals("\\chat_list")) {
-                msg = new MessageBase(MessageType.MSG_CHATLIST, args);
-            } else if (args[0] != null && args[0].equals("\\chat_create")) {
-                msg = new MessageBase(MessageType.MSG_CHATCREATE, args);
-            } else if (args[0] != null && args[0].equals("\\chat_send")) {
-                msg = new MessageBase(MessageType.MSG_CHATSEND, args);
-            } else if (args[0] != null && args[0].equals("\\chat_history")) {
-                msg = new MessageBase(MessageType.MSG_CHATHISTORY, args);
-            } else if (args[0] != null && args[0].equals("\\chat_find")) {
-                msg = new MessageBase(MessageType.MSG_CHATFIND, args);
+            Request request = Request.getType(args[0]);
+            switch (request) {
+                case REQUEST_EXIT:
+                    msg = new MessageBase(MessageType.MSG_LOGOUT, args);
+                    break;
+                case REQUEST_LOGIN:
+                    msg = new MessageBase(MessageType.MSG_LOGIN, args);
+                    break;
+                case REQUEST_REGISTER:
+                    msg = new MessageBase(MessageType.MSG_REGISTER, args);
+                    break;
+                case REQUEST_INFO:
+                    msg = new MessageBase(MessageType.MSG_INFO, args);
+                    break;
+                case REQUEST_HELP:
+                    msg = new MessageBase(MessageType.MSG_HELP, args);
+                    break;
+                case REQUEST_USER:
+                    msg = new MessageBase(MessageType.MSG_USER, args);
+                    break;
+                case REQUEST_USERPASS:
+                    msg = new MessageBase(MessageType.MSG_USERPASS, args);
+                    break;
+                case REQUEST_CHATLIST:
+                    msg = new MessageBase(MessageType.MSG_CHATLIST, args);
+                    break;
+                case REQUEST_CHATCREATE:
+                    msg = new MessageBase(MessageType.MSG_CHATCREATE, args);
+                    break;
+                case REQUEST_CHATSEND:
+                    msg = new MessageBase(MessageType.MSG_CHATSEND, args);
+                    break;
+                case REQUEST_CHATHISTORY:
+                    msg = new MessageBase(MessageType.MSG_CHATHISTORY, args);
+                    break;
+                case REQUEST_CHATFIND:
+                    msg = new MessageBase(MessageType.MSG_CHATFIND, args);
+                    break;
+                default:
+                    System.out.println("INVALID_INPUT");
+                    break;
             }
+        } else {
+            System.out.println("INVALID_INPUT");
         }
-        handler.send(msg);
+        if (msg != null)
+            handler.send(msg);
     }
 
     public void onMessage(Session session, MessageBase msg) {
-        if (msg == null)  //на всякий случай
-            System.out.println("NULL");
-        else if (msg.getMessageType() == MessageType.SRV_ERROR)
-            System.out.println("ERROR: " + msg.getArgs()[0]);
-        else if (msg.getMessageType() == MessageType.SRV_SUCCESS) {
-            System.out.println("SUCCESS: ");
-            for (int i = 0; i < msg.getArgs().length; i++) {
-                System.out.print(msg.getArgs()[i] + " ");
-                System.out.println();
-            }
-        } else if (msg.getMessageType() == MessageType.SRV_LOGINERROR) {
-            System.out.println("LOGIN ERROR: " + msg.getArgs()[0]);
-        } else if (msg.getMessageType() == MessageType.SRV_INVALIDINPUT) {
-            System.out.println("INVALID INPUT: " + msg.getArgs()[0]);
-        } else if (msg.getMessageType() == MessageType.SRV_NEWMESSAGE) {
-            System.out.println("NEWMESSAGE: ");
-            for (int i = 0; i < msg.getArgs().length; i++) {
-                System.out.print(msg.getArgs()[i] + " ");
-                System.out.println();
-            }
+        switch (msg.getMessageType()) {
+            case SRV_ERROR:
+                System.out.println("ERROR: " + msg.getArgs()[0]);
+                break;
+            case SRV_SUCCESS:
+                System.out.println("SUCCESS: ");
+                for (int i = 0; i < msg.getArgs().length; i++) {
+                    System.out.print(msg.getArgs()[i] + " ");
+                    System.out.println();
+                }
+                break;
+            case SRV_LOGINERROR:
+                System.out.println("LOGIN ERROR: " + msg.getArgs()[0]);
+                break;
+            case SRV_INVALIDINPUT:
+                System.out.println("INVALID INPUT: " + msg.getArgs()[0]);
+                break;
+            case SRV_NEWMESSAGE:
+                System.out.println("NEWMESSAGE: ");
+                for (int i = 0; i < msg.getArgs().length; i++) {
+                    System.out.print(msg.getArgs()[i] + " ");
+                    System.out.println();
+                }
+                break;
         }
     }
 
