@@ -25,7 +25,7 @@ public class HelpCommand implements Command {
         data[2] = "\t\\register <Username> <Password>";
         data[3] = "\t\\info <int id>";
         data[4] = "\t\\help";
-        data[5] = "\t\\user <int id>";
+        data[5] = "\t\\user <nickname>";
         data[6] = "\t\\user_pass <old_password> <new_password>";
         data[7] = "\t\\chat_list";
         data[8] = "\t\\chat_create <userId list>";

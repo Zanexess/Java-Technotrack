@@ -28,10 +28,8 @@ public class ChatHistoryCommand implements Command {
                     return new Result(Result.Status.InvalidInput, "Parsing problem");
                 }
                 List<Long> messages = messageStore.getMessagesFromChat(aLong);
-                System.out.println(messages.size());
                 StringBuilder builder = new StringBuilder();
                 for (Long id : messages){
-                    System.out.println(id);
                     builder.append(messageStore.getMessageById(id).getMessage() + "\n");
                 }
                 String str = builder.toString();

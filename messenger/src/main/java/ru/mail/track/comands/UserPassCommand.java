@@ -1,13 +1,20 @@
 package ru.mail.track.comands;
 
+import ru.mail.track.authorization.UserStore;
 import ru.mail.track.session.Session;
 
 public class UserPassCommand implements Command {
+    private UserStore userStore;
+
+    public UserPassCommand(UserStore userStore){
+        this.userStore = userStore;
+    }
     public Result execute(Session session, String[] args) {
         if (args.length == 3) {
             if (session.isUserAuthentificated()) {
-                if (args[1].equals(session.getSessionUser().getPass())) {
+                if (args[1].equals(session.getSessionUser().getPassword())) {
                     session.getSessionUser().setPassword(args[2]);
+                    userStore.update(session.getSessionUser());
                 } else {
                     return new Result(Result.Status.InvalidInput, "Incorrect old password");
                 }

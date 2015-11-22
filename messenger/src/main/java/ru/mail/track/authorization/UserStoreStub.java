@@ -34,7 +34,7 @@ public class UserStoreStub implements UserStore {
 
     public User getUser(String login, String pass) {
         for (User user : users.values()) {
-            if (user.getName().equals(login) && user.getPass().equals(pass)) {
+            if (user.getName().equals(login) && user.getPassword().equals(pass)) {
                 return user;
             }
         }
@@ -56,4 +56,7 @@ public class UserStoreStub implements UserStore {
         }
         return false;
     }
+
+    @Override
+    public void update(User user) {}
 }

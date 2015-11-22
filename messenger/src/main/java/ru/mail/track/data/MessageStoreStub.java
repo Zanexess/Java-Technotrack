@@ -1,6 +1,5 @@
 package ru.mail.track.data;
 
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -62,10 +61,6 @@ public class MessageStoreStub implements MessageStore {
         id++;
     }
 
-    public void addMessage(Long messageId, Long chatId) {
-        chats.get(chatId).addMessage(messageId);
-    }
-
     public List<Long> getParticipantByChatId(Long chatId) {
         return chats.get(chatId).getParticipantIds();
     }
@@ -80,10 +75,6 @@ public class MessageStoreStub implements MessageStore {
 
     public Message getMessageById(Long messageId) {
         return messages.get(messageId);
-    }
-
-    public void addUserToChat(Long userId, Long chatId) {
-        chats.get(chatId).addParticipant(userId);
     }
 
     public List<Long> getChatsByUserId(Long userId){

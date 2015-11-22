@@ -25,7 +25,7 @@ public class UserLocalStore implements UserStore {
 
     public User getUser(String name, String pass) {
         for (User user : users) {
-            if (user != null && user.getName().equals(name) && user.getPass().equals(pass)) {
+            if (user != null && user.getName().equals(name) && user.getPassword().equals(pass)) {
                 return user;
             }
         }
@@ -39,5 +39,10 @@ public class UserLocalStore implements UserStore {
             }
         }
         return null;
+    }
+
+    @Override
+    public void update(User user) {
+
     }
 }

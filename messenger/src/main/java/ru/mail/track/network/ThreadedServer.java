@@ -9,12 +9,15 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import ru.mail.track.Messeges.MessageType;
 import ru.mail.track.authorization.AuthorizationService;
+import ru.mail.track.authorization.UserDatabaseStore;
 import ru.mail.track.authorization.UserStore;
-import ru.mail.track.authorization.UserStoreStub;
 import ru.mail.track.comands.*;
 import ru.mail.track.Messeges.MessageBase;
+import ru.mail.track.data.MessageDatabaseStore;
 import ru.mail.track.data.MessageStore;
 import ru.mail.track.data.MessageStoreStub;
+import ru.mail.track.Dao.DaoFactory;
+import ru.mail.track.PostgreSQL.PostgreSQLDaoFactory;
 import ru.mail.track.session.Session;
 
 
@@ -28,6 +31,7 @@ public class ThreadedServer implements MessageListener {
     private Protocol protocol;
     private SessionManager sessionManager;
     private CommandHandler commandHandler;
+    private DaoFactory daoFactory;
 
     public ThreadedServer(Protocol protocol, SessionManager sessionManager, CommandHandler commandHandler) {
         this.protocol = protocol;
@@ -50,9 +54,12 @@ public class ThreadedServer implements MessageListener {
             ConnectionHandler handler = new SocketConnectionHandler(protocol, sessionManager.createSession(), socket);
             handler.addListener(this);
 
+
             handlers.put(internalCounter.incrementAndGet(), handler);
             Thread thread = new Thread(handler);
             thread.start();
+
+
         }
     }
 
@@ -72,9 +79,12 @@ public class ThreadedServer implements MessageListener {
         Protocol protocol = new MyProtocol();
         SessionManager sessionManager = new SessionManager();
 
-        UserStore userStore = new UserStoreStub();
-        MessageStore messageStore = new MessageStoreStub();
+        DaoFactory daoFactory = new PostgreSQLDaoFactory();
+        UserStore userStore = new UserDatabaseStore(daoFactory);
+        MessageStore messageStore = new MessageDatabaseStore(daoFactory);
         AuthorizationService authorizationService = new AuthorizationService(userStore);
+
+
 
         Map<MessageType, Command> cmds = new HashMap<MessageType, Command>();
         cmds.put(MessageType.MSG_LOGIN, new LoginCommand(authorizationService, sessionManager));
@@ -82,8 +92,8 @@ public class ThreadedServer implements MessageListener {
         cmds.put(MessageType.MSG_REGISTER, new RegistrationCommand(authorizationService, sessionManager));
         cmds.put(MessageType.MSG_INFO, new SessionInfoCommand(userStore));
         cmds.put(MessageType.MSG_HELP, new HelpCommand(cmds));
-        cmds.put(MessageType.MSG_USER, new UserCommand());
-        cmds.put(MessageType.MSG_USERPASS, new UserPassCommand());
+        cmds.put(MessageType.MSG_USER, new UserCommand(userStore));
+        cmds.put(MessageType.MSG_USERPASS, new UserPassCommand(userStore));
         cmds.put(MessageType.MSG_CHATLIST, new ChatListCommand(messageStore));
         cmds.put(MessageType.MSG_CHATCREATE, new ChatCreateCommand(messageStore));
         cmds.put(MessageType.MSG_CHATSEND, new ChatSendCommand(sessionManager, messageStore));

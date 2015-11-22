@@ -1,14 +1,26 @@
 package ru.mail.track.data;
 
+import ru.mail.track.Dao.Identified;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class Chat {
+public class Chat implements Identified {
 
     private Long id;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     /**
      * Храним список идентификаторов
      */

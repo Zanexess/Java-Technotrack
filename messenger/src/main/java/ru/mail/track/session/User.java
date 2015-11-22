@@ -1,26 +1,26 @@
 package ru.mail.track.session;
+import ru.mail.track.Dao.Identified;
 
-import java.util.concurrent.atomic.AtomicLong;
-
-public class User {
-    //Из-за того, что UserStoreStub содержит 4 юзеров, для логичности
-    private AtomicLong userId = new AtomicLong(3);
+public class User implements Identified {
+    private Long userId;
     private String nickName;
     private String name;
     private String pass;
+
+    public User(){
+
+    }
 
     public User(String name, String pass) {
         this.name = name;
         this.pass = pass;
         this.nickName = name;
-        userId.incrementAndGet();
     }
 
     public User(String nickName, String name, String pass) {
         this.nickName = nickName;
         this.pass = pass;
         this.name = name;
-        userId.incrementAndGet();
     }
 
     public String getName() {
@@ -29,14 +29,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
 
     public String getNickName() {
@@ -51,12 +43,16 @@ public class User {
         pass = password;
     }
 
-    public long getId(){
-        return userId.get();
+    public String getPassword() {
+        return pass;
     }
 
-    public void setId(Long id){
-        this.userId = new AtomicLong(id);
+    public Long getId() {
+        return userId;
+    }
+
+    public void setId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

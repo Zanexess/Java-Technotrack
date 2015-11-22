@@ -1,8 +1,10 @@
 package ru.mail.track.data;
 
+import ru.mail.track.Dao.Identified;
+
 import java.util.Date;
 
-public class Message {
+public class Message implements Identified {
     private Long messageId;
     private String message;
     private Long senderId;
@@ -24,6 +26,14 @@ public class Message {
         this.chatId = chatId;
         this.messageId = messageId;
     }
+
+    public Message (String message, Long senderId, Long chatId, String timestamp){
+        this.message = message;
+        this.senderId = senderId;
+        this.chatId = chatId;
+        this.timestamp = timestamp;
+    }
+
 
     public String getTimestamp(){
         return timestamp;
@@ -72,10 +82,21 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "messageId= " + messageId + '\'' +
-                "senderId= " + senderId + '\'' +
-                ", message=" + message + '\'' +
-                ", timestamp=" + timestamp + '\'' +
+                "messageId=" + messageId +
+                ", message='" + message + '\'' +
+                ", senderId=" + senderId +
+                ", chatId=" + chatId +
+                ", timestamp='" + timestamp + '\'' +
                 '}';
+    }
+
+    @Override
+    public Long getId() {
+        return messageId;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.messageId = id;
     }
 }

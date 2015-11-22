@@ -14,7 +14,7 @@ import java.util.List;
 public class ChatSendCommand implements Command {
     private MessageStore messageStore;
     private SessionManager sessionManager;
-    private long messagesCounter = 1;
+    //private long messagesCounter = 1;
 
     public ChatSendCommand(SessionManager sessionManager, MessageStore messageStore){
         this.messageStore = messageStore;
@@ -42,19 +42,22 @@ public class ChatSendCommand implements Command {
                     }
                     String str = builder.toString();
 
-                    messageStore.getChatById(aLong).addMessage(messagesCounter);
+                    //messageStore.getChatById(aLong).addMessage(messagesCounter);
 
-                    Message msg = new Message(str, session.getSessionUser().getId(), aLong, messagesCounter);
+                    Message msg = new Message(str, session.getSessionUser().getId(), aLong, new java.util.Date().toString());
+
                     messageStore.addMessage(msg);
-                    messagesCounter++;
+                    //messagesCounter++;
 
                     String[] string = new String[1];
                     string[0] = msg.getMessage();
 
                     MessageBase mm = new MessageBase(MessageType.SRV_NEWMESSAGE, string, msg);
 
-                    Chat chat = messageStore.getChatById(aLong);
-                    List<Long> parts = chat.getParticipantIds();
+
+                    List<Long> parts = messageStore.getParticipantByChatId(aLong);
+                    //Chat chat = messageStore.getChatById(aLong);
+                    //List<Long> parts = chat.getParticipantIds();
                     try {
                         for (Long userId: parts) {
                             Session userSession = sessionManager.getSessionByUser(userId);

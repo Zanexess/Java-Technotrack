@@ -28,7 +28,7 @@ public class Main {
         //Создаем команды
         //Command loginCommand = new LoginCommand(authService);
         //Command helpCommand = new HelpCommand(commands);
-        Command userCommand = new UserCommand();
+        Command userCommand = new UserCommand(userStore);
         Command historyCommand = new HistoryCommand(dataStorage);
         Command sessionInfo = new SessionInfoCommand(userStore);
         Command exitProfile = new ExitCommand();

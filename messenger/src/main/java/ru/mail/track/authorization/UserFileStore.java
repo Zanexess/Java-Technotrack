@@ -88,4 +88,9 @@ public class UserFileStore implements UserStore {
         System.out.println("Not Supported by UserFileStore");
         return null;
     }
+
+    @Override
+    public void update(User user) {
+
+    }
 }

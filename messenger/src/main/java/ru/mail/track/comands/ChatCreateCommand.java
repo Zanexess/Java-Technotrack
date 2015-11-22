@@ -1,5 +1,6 @@
 package ru.mail.track.comands;
 
+import ru.mail.track.Dao.Exceptions.PersistException;
 import ru.mail.track.data.Chat;
 import ru.mail.track.data.MessageStore;
 import ru.mail.track.session.Session;
