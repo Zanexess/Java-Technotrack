@@ -1,8 +1,5 @@
 package ru.mail.track.Messeges;
 
-/**
- * Created by zanexess on 17.11.15.
- */
 public enum Request {
 
     REQUEST_EXIT("\\exit"),
@@ -17,6 +14,7 @@ public enum Request {
     REQUEST_CHATSEND("\\chat_send"),
     REQUEST_CHATHISTORY("\\chat_history"),
     REQUEST_CHATFIND("\\chat_find"),
+    REQUEST_STOP("\\stop"),
     REQUEST_DEFAULT("");
 
     private String typeValue;

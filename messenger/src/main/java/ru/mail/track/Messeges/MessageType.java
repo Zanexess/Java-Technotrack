@@ -16,8 +16,8 @@ public enum MessageType{
     MSG_CHATLIST,     //+
     MSG_CHATSEND,     //+
     MSG_CHATCREATE,   //+
-    MSG_CHATHISTORY,
-    MSG_CHATFIND,
+    MSG_CHATHISTORY,  //+
+    MSG_CHATFIND,     //+
 
     //Ответы сервера
     SRV_SUCCESS,      //+

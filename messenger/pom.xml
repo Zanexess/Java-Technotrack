@@ -35,7 +35,7 @@
                                 <argument>-classpath</argument>
                                 <classpath />
                                 <argument>
-                                    ru.mail.track.network.ThreadClient
+                                    ru.mail.track.Network.ThreadClient
                                 </argument>
                             </arguments>
                         </configuration>
@@ -62,7 +62,7 @@
                                 <argument>-classpath</argument>
                                 <classpath />
                                 <argument>
-                                    ru.mail.track.network.ThreadedServer
+                                    ru.mail.track.Network.ThreadedServer
                                 </argument>
                             </arguments>
                         </configuration>
@@ -135,6 +135,12 @@
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.0.1</version>
+        </dependency>
     </dependencies>
+
 
 </project>

@@ -6,8 +6,8 @@ import static org.junit.Assert.*;
 
 import ru.mail.track.Messeges.MessageBase;
 import ru.mail.track.Messeges.MessageType;
-import ru.mail.track.network.MyProtocol;
-import ru.mail.track.network.Protocol;
+import ru.mail.track.Protocol.MyProtocol;
+import ru.mail.track.Protocol.Protocol;
 
 public class JsonProtocolTest {
     private Protocol protocol;

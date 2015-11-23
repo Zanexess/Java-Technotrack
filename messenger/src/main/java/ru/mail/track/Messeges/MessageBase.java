@@ -1,6 +1,6 @@
 package ru.mail.track.Messeges;
 
-import ru.mail.track.data.Message;
+import ru.mail.track.Data.Message;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -12,6 +12,7 @@ public class MessageBase implements Serializable {
     private String args[];
     private Message msg;
 
+    //Хоть конструктор и кажется бесполезным, но нужен для успешной сериализации json
     MessageBase(){
 
     }
