@@ -22,6 +22,9 @@ import ru.mail.track.Dao.DaoFactory;
 import ru.mail.track.Dao.PostgreSQL.PostgreSQLDaoFactory;
 import ru.mail.track.Session.Session;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class ThreadedServer implements MessageListener {
 
@@ -33,13 +36,14 @@ public class ThreadedServer implements MessageListener {
     private Protocol protocol;
     private SessionManager sessionManager;
     private CommandHandler commandHandler;
+    private ExecutorService exService;
     static Logger log = LoggerFactory.getLogger(ThreadedServer.class);
 
     public ThreadedServer(Protocol protocol, SessionManager sessionManager, CommandHandler commandHandler) {
         this.protocol = protocol;
         this.sessionManager = sessionManager;
         this.commandHandler = commandHandler;
-
+        exService = Executors.newCachedThreadPool();
         try {
             sSocket = new ServerSocket(PORT);
             sSocket.setReuseAddress(true);
@@ -63,17 +67,16 @@ public class ThreadedServer implements MessageListener {
 
             handlers.put(internalCounter.incrementAndGet(), handler);
             Thread thread = new Thread(handler);
-            thread.start();
-
+            //thread.start();
+            exService.execute(thread);
             //threadPool.execute(new Thread(handler));
-
-
         }
     }
 
 
     public void stopServer() {
         isRunning = false;
+        exService.shutdown();
         for (ConnectionHandler handler : handlers.values()) {
             handler.stop();
         }
@@ -92,7 +95,6 @@ public class ThreadedServer implements MessageListener {
         UserStore userStore = new UserDatabaseManyConnectionsStore(daoFactory);
         MessageStore messageStore = new MessageDatabaseManyConnectionsStore(daoFactory);
         AuthorizationService authorizationService = new AuthorizationService(userStore);
-
 
 
         Map<MessageType, Command> cmds = new HashMap<>();

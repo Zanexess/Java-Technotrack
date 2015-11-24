@@ -126,6 +126,7 @@ public class ThreadClient implements MessageListener {
         }
     }
 
+
     public static void main(String[] args) throws Exception{
         ThreadClient client = new ThreadClient();
 
