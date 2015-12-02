@@ -94,4 +94,24 @@ public class UserDatabaseManyConnectionsStore implements UserStore{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean isUserExist(Long id) {
+        List<User> list;
+        try {
+            Connection connection = (Connection)daoFactory.getContext();
+            GenericDao userDao = daoFactory.getDao(connection, User.class);
+            list = userDao.getAll();
+            for (User user : list) {
+                if (user.getId() == id){
+                    connection.close();
+                    return true;
+                }
+            }
+            connection.close();
+        } catch (PersistException | SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

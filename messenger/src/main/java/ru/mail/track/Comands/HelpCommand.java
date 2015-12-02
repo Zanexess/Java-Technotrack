@@ -21,7 +21,7 @@ public class HelpCommand implements Command {
         data[0] = "Commands: ";
 
         data[0] = "\t\\login <Username> <Password>";
-        data[1] = "\t\\logout";
+        data[1] = "\t\\exit";
         data[2] = "\t\\register <Username> <Password>";
         data[3] = "\t\\info <int id>";
         data[4] = "\t\\help";

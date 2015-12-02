@@ -79,4 +79,20 @@ public class UserDatabaseStore implements UserStore{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean isUserExist(Long id) {
+        List<User> list;
+        try {
+            list = userDao.getAll();
+            for (User user : list) {
+                if (user.getId() == id){
+                    return true;
+                }
+            }
+        } catch (PersistException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

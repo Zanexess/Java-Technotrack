@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.mail.track.ConnectionPool.Network.ThreadPool;
 import ru.mail.track.Protocol.MyProtocol;
 import ru.mail.track.Protocol.Protocol;
 import ru.mail.track.Messeges.MessageType;
@@ -43,7 +42,9 @@ public class ThreadedServer implements MessageListener {
         this.protocol = protocol;
         this.sessionManager = sessionManager;
         this.commandHandler = commandHandler;
-        exService = Executors.newCachedThreadPool();
+        //TODO ExecutionService
+        //exService = Executors.newCachedThreadPool();
+        exService = Executors.newFixedThreadPool(3);
         try {
             sSocket = new ServerSocket(PORT);
             sSocket.setReuseAddress(true);
@@ -68,7 +69,7 @@ public class ThreadedServer implements MessageListener {
             handlers.put(internalCounter.incrementAndGet(), handler);
             Thread thread = new Thread(handler);
             //thread.start();
-            exService.execute(thread);
+            exService.submit(thread);
             //threadPool.execute(new Thread(handler));
         }
     }
@@ -106,7 +107,7 @@ public class ThreadedServer implements MessageListener {
         cmds.put(MessageType.MSG_USER, new UserCommand(userStore));
         cmds.put(MessageType.MSG_USERPASS, new UserPassCommand(userStore));
         cmds.put(MessageType.MSG_CHATLIST, new ChatListCommand(messageStore));
-        cmds.put(MessageType.MSG_CHATCREATE, new ChatCreateCommand(messageStore));
+        cmds.put(MessageType.MSG_CHATCREATE, new ChatCreateCommand(messageStore, userStore));
         cmds.put(MessageType.MSG_CHATSEND, new ChatSendCommand(sessionManager, messageStore));
         cmds.put(MessageType.MSG_CHATHISTORY, new ChatHistoryCommand(messageStore));
         cmds.put(MessageType.MSG_CHATFIND, new ChatFindCommand(messageStore));

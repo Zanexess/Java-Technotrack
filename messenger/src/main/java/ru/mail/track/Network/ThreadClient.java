@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.mail.track.Data.Message;
 import ru.mail.track.Protocol.MyProtocol;
 import ru.mail.track.Protocol.Protocol;
 import ru.mail.track.Messeges.MessageBase;
@@ -23,9 +24,25 @@ public class ThreadClient implements MessageListener {
     private MessageBase msg;
 
     ConnectionHandler handler;
+    Thread socketHandler;
 
     public ThreadClient() {
         init();
+    }
+
+    public void stop() {
+        socketHandler.interrupt();
+        handler.stop();
+        String[] args = new String[1];
+        //TODO Fix to exit
+        MessageBase msg = new MessageBase(MessageType.MSG_HELP, args);
+        try {
+            handler.send(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(socketHandler.isAlive());
     }
 
     public void init() {
@@ -36,7 +53,7 @@ public class ThreadClient implements MessageListener {
             handler = new SocketConnectionHandler(protocol, session, socket);
             handler.addListener(this);
 
-            Thread socketHandler = new Thread(handler);
+            socketHandler = new Thread(handler);
             socketHandler.start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,8 +153,10 @@ public class ThreadClient implements MessageListener {
         while (true) {
             String input = scanner.nextLine();
             if ("q".equals(input)) {
+                client.stop();
                 return;
             }
+
             client.processInput(input);
         }
     }

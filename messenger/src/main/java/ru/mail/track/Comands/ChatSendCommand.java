@@ -61,14 +61,17 @@ public class ChatSendCommand implements Command {
                         for (Long userId: parts) {
                             Session userSession = sessionManager.getSessionByUser(userId);
                             if (userSession != null){
+                                //TODO FIX
+                                System.out.println("1");
                                 userSession.getConnectionHandler().send(mm);
+                                System.out.println("7");
                             } else {
 
                             }
                         }
                         return new Result(Result.Status.Success, "SEND");
                     } catch (IOException e){
-                        return new Result(Result.Status.Error, "");
+                        //return new Result(Result.Status.Error, "");
                     }
                 } else {
                     return new Result(Result.Status.Error, "The chat doesn't exist");

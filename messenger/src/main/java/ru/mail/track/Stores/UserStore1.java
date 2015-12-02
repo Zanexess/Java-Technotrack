@@ -2,12 +2,9 @@ package ru.mail.track.Stores;
 
 import ru.mail.track.Data.User;
 
-public interface  UserStore {
+public interface  UserStore1 {
     // Проверка на существования User с именем name
     boolean isUserExist(String name);
-
-    // Проверка на существование User с id=id
-    boolean isUserExist(Long id);
 
     // Добавить пользователя
     void addUser(User user);
