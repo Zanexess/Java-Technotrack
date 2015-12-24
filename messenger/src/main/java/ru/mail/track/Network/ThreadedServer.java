@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class ThreadedServer implements MessageListener {
+public class ThreadedServer implements MessageListener, Server {
 
     public static final int PORT = 19000;
     private volatile boolean isRunning;
@@ -43,8 +43,7 @@ public class ThreadedServer implements MessageListener {
         this.sessionManager = sessionManager;
         this.commandHandler = commandHandler;
         //TODO ExecutionService
-        //exService = Executors.newCachedThreadPool();
-        exService = Executors.newFixedThreadPool(3);
+        exService = Executors.newCachedThreadPool();
         try {
             sSocket = new ServerSocket(PORT);
             sSocket.setReuseAddress(true);
@@ -52,21 +51,24 @@ public class ThreadedServer implements MessageListener {
             e.printStackTrace();
             System.exit(0);
         }
+
     }
 
 
 
-    private void startServer() throws Exception {
+    public void startServer() throws Exception {
         isRunning = true;
 
         //ThreadPool threadPool = new ThreadPool(1, 3);
 
         while (isRunning) {
             Socket socket = sSocket.accept();
+
             ConnectionHandler handler = new SocketConnectionHandler(protocol, sessionManager.createSession(), socket);
-            handler.addListener(this);
+            handler.addListener(commandHandler);
 
             handlers.put(internalCounter.incrementAndGet(), handler);
+
             Thread thread = new Thread(handler);
             //thread.start();
             exService.submit(thread);
@@ -74,13 +76,11 @@ public class ThreadedServer implements MessageListener {
         }
     }
 
-
-    public void stopServer() {
+    @Override
+    public void destroyServer() {
         isRunning = false;
+        handlers.values().forEach(ConnectionHandler::stop);
         exService.shutdown();
-        for (ConnectionHandler handler : handlers.values()) {
-            handler.stop();
-        }
     }
 
     public void onMessage(Session session, MessageBase message) {

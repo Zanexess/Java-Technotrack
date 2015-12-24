@@ -66,11 +66,9 @@ public class SocketConnectionHandler implements ConnectionHandler {
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println("NotIn");
     }
 
     public void stop() {
-        System.out.println("SIGNAL");
         Thread.currentThread().interrupt();
     }
 

@@ -22,6 +22,7 @@ public class ThreadClient implements MessageListener {
     public static final String HOST = "localhost";
     private Protocol protocol;
     private MessageBase msg;
+    private Socket socket;
 
     ConnectionHandler handler;
     Thread socketHandler;
@@ -34,21 +35,35 @@ public class ThreadClient implements MessageListener {
         socketHandler.interrupt();
         handler.stop();
         String[] args = new String[1];
+
         //TODO Fix to exit
-        MessageBase msg = new MessageBase(MessageType.MSG_HELP, args);
+        MessageBase msg = new MessageBase(MessageType.MSG_STUB, args);
         try {
             handler.send(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println(socketHandler.isAlive());
+        while (socketHandler.isAlive()) {
+            try {
+                socketHandler.interrupt();
+                socketHandler.join(100);
+            } catch (InterruptedException e) {
+
+            }
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+
+        }
+        Thread.currentThread().interrupt();
     }
 
     public void init() {
         try {
             protocol = new MyProtocol();
-            Socket socket = new Socket(HOST, PORT);
+            socket = new Socket(HOST, PORT);
             Session session = new Session();
             handler = new SocketConnectionHandler(protocol, session, socket);
             handler.addListener(this);
@@ -154,9 +169,9 @@ public class ThreadClient implements MessageListener {
             String input = scanner.nextLine();
             if ("q".equals(input)) {
                 client.stop();
+                System.exit(1);
                 return;
             }
-
             client.processInput(input);
         }
     }

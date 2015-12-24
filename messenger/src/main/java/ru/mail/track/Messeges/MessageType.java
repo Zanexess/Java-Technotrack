@@ -18,6 +18,7 @@ public enum MessageType{
     MSG_CHATCREATE,   //+
     MSG_CHATHISTORY,  //+
     MSG_CHATFIND,     //+
+    MSG_STUB,
 
     //Ответы сервера
     SRV_SUCCESS,      //+
